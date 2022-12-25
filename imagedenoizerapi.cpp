@@ -1,4 +1,4 @@
-#include "imagedenoizapi.h"
+#include "imagedenoizerapi.h"
 
 #include <opencv2/opencv.hpp>
 
@@ -36,7 +36,7 @@ void ImageDenoizeAPI::run()
 + Returns    : TRUE if success; FALSE otherwise
 @endverbatim
 ***************************************************************************/
-bool ImageDenoizeAPI::bDenoize(QString file, ProcessType type, ProcessParameters params)
+bool ImageDenoizeAPI::bDenoize(QString file, ProcessType type, ProcessParameters params, QImage &out)
 {
     cv::Mat input;
     cv::Mat tmp;
@@ -81,10 +81,30 @@ bool ImageDenoizeAPI::bDenoize(QString file, ProcessType type, ProcessParameters
     // Change coding order from BGR to RGB
     cv::cvtColor(tmp, output, cv::COLOR_BGR2RGB);
 
+    // Fill output passed in arg
+    out = QImage(output.data, output.cols, output.rows, output.step, QImage::Format_RGB888).copy();
+
     // Transmit denoized image to who is interested
-    emit updatedImg(QPixmap::fromImage(QImage(output.data, output.cols, output.rows, output.step, QImage::Format_RGB888)));
+    //emit updatedImg(out);
 
     return true;
+}
+
+bool ImageDenoizeAPI::bSaveImage(QString file, QImage image)
+{
+    if(image.byteCount() <= 0)
+    {
+        qDebug() << __func__ << " Error Image Size == null!";
+        return false;
+    }
+
+    if(image.save(file))
+        return true;
+    else
+    {
+        qDebug() << __func__ << " Could not save image!";
+        return false;
+    }
 }
 
 

@@ -37,7 +37,8 @@ public slots:
     void start(void) { bRunning = true; QThread::start(); }
     void stop(void) { bRunning = false; QThread::exit(); }
 
-    bool bDenoize(QString file, ProcessType type, ProcessParameters params);
+    bool bDenoize(QString file, ProcessType type, ProcessParameters params, QImage &out);
+    bool bSaveImage(QString file, QImage image);
 
     // Add other processing functions;
 
