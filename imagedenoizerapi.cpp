@@ -90,6 +90,17 @@ bool ImageDenoizeAPI::bDenoize(QString file, ProcessType type, ProcessParameters
     return true;
 }
 
+
+/**
+*************************************************************************
+@verbatim
++ bSaveImage() - Save image at target location
++ ----------------
++ Parameters : file     string containing filename
++              image    image data to be saved
++ Returns    : TRUE if success; FALSE otherwise
+@endverbatim
+***************************************************************************/
 bool ImageDenoizeAPI::bSaveImage(QString file, QImage image)
 {
     if(image.byteCount() <= 0)

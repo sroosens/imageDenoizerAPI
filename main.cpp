@@ -2,6 +2,34 @@
 #include <QFileInfo>
 #include "imagedenoizerapi.h"
 
+ProcessType GetFilterTypeFromString(QString type)
+{
+    ProcessType eType;
+
+    if(type == "median")
+    {
+        eType = TypeMedianBlur;
+        printf("TypeMedianBlur\n");
+    }
+    else if(type == "gaussian")
+    {
+        eType = TypeGaussianBlur;
+        printf("TypeGaussianBlur\n");
+    }
+    else if(type == "nlmeans")
+    {
+        eType = TypeNlMeans;
+        printf("TypeNlMeans\n");
+    }
+    else
+    {
+        printf("Default TypeGaussianBlur\n");
+        eType = TypeGaussianBlur;
+    }
+
+    return eType;
+}
+
 int main(int argc, char *argv[])
 {
     ImageDenoizeAPI denoizeAPI;
@@ -35,32 +63,4 @@ int main(int argc, char *argv[])
         printf("Denoize file saved!\n");
     else
         printf("Error while saving denoized file!\n");
-}
-
-ProcessType GetFilterTypeFromString(QString type)
-{
-    ProcessType eType;
-
-    if(type == "median")
-    {
-        eType = TypeMedianBlur;
-        printf("TypeMedianBlur\n");
-    }
-    else if(type == "gaussian")
-    {
-        eType = TypeGaussianBlur;
-        printf("TypeGaussianBlur\n");
-    }
-    else if(type == "nlmeans")
-    {
-        eType = TypeNlMeans;
-        printf("TypeNlMeans\n");
-    }
-    else
-    {
-        printf("Default TypeGaussianBlur\n");
-        eType = TypeGaussianBlur;
-    }
-
-    return eType;
 }
