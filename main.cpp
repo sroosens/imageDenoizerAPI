@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
     // Denoize target image with target filter
     //
-    if(denoizeAPI.bDenoize(fileName, GetFilterTypeFromString(filterType), params, output))
+    if(denoizeAPI.bApplyDenoize(fileName, GetFilterTypeFromString(filterType), params, output))
         printf("File successfully denoized!\n");
     else
         printf("Error while denoizing! \n"
