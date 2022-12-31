@@ -38,6 +38,9 @@ int main(int argc, char *argv[])
 
     // Set default parameters
     params.aperture = 5;
+    params.sigma = 15;
+    params.kernelSizeWidth = 5;
+    params.kernelSizeHeight = 5;
 
     if(argc < 2)
     {
@@ -48,14 +51,21 @@ int main(int argc, char *argv[])
     QString fileName = QString(argv[1]);
     QString filterType = QString(argv[2]);
 
-    // Denoize target image with target filter
+    // Load image
     //
-    if(denoizeAPI.bApplyDenoize(fileName, GetFilterTypeFromString(filterType), params, output))
-        printf("File successfully denoized!\n");
+    if(denoizeAPI.bLoadImage(fileName))
+        printf("File successfully loaded!\n");
     else
-        printf("Error while denoizing! \n"
+        printf("Error while loading! \n"
                "File path shall be in ASCII standard (no é, è, ê, µ, ¨, ...) \n"
                "File format shall be .jpg, .png, .tiff\n");
+
+    // Denoize target image with target filter
+    //
+    if(denoizeAPI.bApplyDenoizeToQImage(GetFilterTypeFromString(filterType), params, output))
+        printf("File successfully denoized!\n");
+    else
+        printf("Error while denoizing! \n");
 
     // Save denoized image at target location
     //
